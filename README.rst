@@ -25,7 +25,7 @@ Requirements
 Installation
 ============
 
-Just clone with ``git`` inside you project's folder::
+Just clone with ``git``::
     git clone https://github.com/denisviklov/django-url-health
 
 and add 'url_health' in your ``INSTALLED_APPS`` section.
