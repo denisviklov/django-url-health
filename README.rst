@@ -25,8 +25,5 @@ Requirements
 Installation
 ============
 
-Just clone with ``git``::
-    git clone https://github.com/denisviklov/django-url-health
-
-and add 'url_health' in your ``INSTALLED_APPS`` section.
+Clone and add 'url_health' in your ``INSTALLED_APPS`` section.
 Also don't forget to recollect your static files that's how bot file appers in the avaliable directory

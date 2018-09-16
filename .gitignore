@@ -1,6 +1,5 @@
 *.pyc
 *.pyo
-manage.py
 celerybeat-schedule
 celerybeat.pid
 .DS_Store
