@@ -6,4 +6,5 @@ env:
  - DJANGO_VERSION=2.0
 install:
  - pip install Django
- script: python manage.py test
+ script:
+ - python manage.py test
