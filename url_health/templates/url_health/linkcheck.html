@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block page_title %}
+
+    <div>
+        <h1>Link checker</h1>
+    </div>
+
+{% endblock page_title %}
+
+{% block content %}
+<div>
+  <div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Add">
+        </form>
+        <a href="{% url 'scan' %}">Start scan</a>
+        <p></p>
+        <table id="table-links">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Link</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for link in links %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{{ link.link }}">{{ link.link }}</a></td>
+                        <td>{% if link.description %}{{ link.description }}{% endif %}</td>
+                        <td><a href="{% url 'delete_url' link.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody> 
+        </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

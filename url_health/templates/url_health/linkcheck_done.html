@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block page_title %}
+
+        <div class="page-title">
+            <h1>Link check <span id="scanning">in progress ...</span></h1>
+        </div>
+        <div class="page-toolbar">
+            <a href="{% url 'index' %}" class="btn btn-primary btn-long">< Back</a>
+        </div>
+
+{% endblock page_title %}
+
+{% block js %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+{% endblock js %}
+
+{% block content %}
+<div>
+  <div>
+    <div>
+        <table id="check_results">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Link</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="result-table">
+                {% include 'url_health/link_check_table.html' %}
+            </tbody> 
+        </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+    function doPoll(){
+        $.get('{% url "poll_results" %}', function(data) {
+            if(data){
+                $('#result-table').html(data.html);
+            }
+            if(data.stop){
+                $('#scanning').text('complete');
+                return
+            }else{
+                setTimeout(doPoll, 5000);
+            }
+        });
+    };
+    doPoll();
+})();
+
+</script>
+{% endblock content %}

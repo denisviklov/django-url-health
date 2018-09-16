@@ -1,0 +1,8 @@
+language: python
+sudo: false
+python:
+ - "3.5"
+env:
+ - DJANGO_VERSION=2.0
+install:
+ - pip install -q "Django>=${DJANGO_VERSION},<${DJANGO_VERSION}.99"

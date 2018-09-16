@@ -1,0 +1,16 @@
+*.pyc
+*.pyo
+manage.py
+celerybeat-schedule
+celerybeat.pid
+.DS_Store
+.coverage
+.python-version
+mockapp/*
+static/*
+htmlcov/*
+doc/*
+templates/*
+db.sqlite3
+dump.rdb
+requirements.txt

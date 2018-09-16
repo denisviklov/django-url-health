@@ -1,0 +1,8 @@
+{% for res in results %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td><a href="{{ res.link }}">{{ res.link }}</a></td>
+        <td>{% if link.description %}{{ link.description }}{% endif %}</td>
+        <td>{{ res.status }}</td>
+    </tr>
+{% endfor %}
