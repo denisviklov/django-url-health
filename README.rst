@@ -14,13 +14,17 @@ Requirements
 ============
 
 ``Python 3+``
+
 ``Django 2+``
+
 ``Celery 3+``
+
 ``CasperJS``
 
 
 Installation
 ============
+
 Just clone with ``git`` inside you project's folder::
     git clone https://github.com/denisviklov/django-url-health
 
