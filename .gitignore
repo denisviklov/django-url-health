@@ -13,3 +13,6 @@ templates/*
 db.sqlite3
 dump.rdb
 requirements.txt
+build/*
+dist/*
+django_url_health.egg-info/*
