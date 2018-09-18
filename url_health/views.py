@@ -25,8 +25,21 @@ def index(request):
 @login_required
 def scan(request):
     LinkStore.objects.all().update(status=0)
-    print(request.META['HTTP_HOST'])
-    scan_links.delay(request.META['HTTP_HOST'])
+
+    scan = Scanning.objects.first()
+
+    #very first run let's create initial scan obj
+    if scan == None:
+        scan = Scanning.objects.create()
+
+    if scan.status == Scanning.RUN:
+        return
+
+    scan.status = 1
+    scan.save()
+
+    domain = request.META.get('HTTP_HOST') or 'http://localhost:8000'
+    scan_links.delay(domain)
     return redirect('scan_results')
 
 

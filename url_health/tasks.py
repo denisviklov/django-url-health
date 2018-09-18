@@ -9,22 +9,7 @@ BOT_ROOT = os.path.join(os.path.abspath(os.path.dirname(__name__)), 'static/js/b
 
 @task(ignore_result=True)
 def scan_links(domain):
-    from url_health.models import Scanning
-
-    scan = Scanning.objects.first()
-
-    #very first run let's create initial scan obj
-    if scan == None:
-        scan = Scanning.objects.create()
-
-    if scan.status == Scanning.RUN:
-        return
-
-    scan.status = 1
-    scan.save()
-
     logger.info('start scanning')
-
     try:
         subprocess.check_call(['casperjs', BOT_ROOT, domain])
     except:
