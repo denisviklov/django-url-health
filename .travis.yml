@@ -6,6 +6,10 @@ env:
  - DJANGO_VERSION=2.0
 install:
  - pip install Django
+ - pip install coverage
+ - pip install python-coveralls
  - pip install -q -e .
 script:
- - python manage.py test
+ - coverage run --source='url_health' manage.py test url_health
+after_success:
+  - coveralls

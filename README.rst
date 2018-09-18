@@ -4,6 +4,8 @@ django-url-health
 
 .. image:: https://travis-ci.org/denisviklov/django-url-health.png?branch=master
    :target: https://travis-ci.org/denisviklov/django-url-health
+.. image:: https://coveralls.io/repos/github/denisviklov/django-url-health/badge.svg?branch=master
+   :target: https://coveralls.io/github/denisviklov/django-url-health?branch=master
 
 **django-url-health** is a simple but powerful app to perform various actions on http pages.
 
