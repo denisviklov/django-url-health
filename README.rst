@@ -7,6 +7,7 @@ django-url-health
 .. image:: https://coveralls.io/repos/github/denisviklov/django-url-health/badge.svg?branch=master
    :target: https://coveralls.io/github/denisviklov/django-url-health?branch=master
 
+
 **django-url-health** is a simple but powerful app to perform various actions on http pages.
 
 It doesn't restrict only with URL checking because it supports custom ``BOTS`` what might perform any checks and send
