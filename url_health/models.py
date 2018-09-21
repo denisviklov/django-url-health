@@ -36,4 +36,4 @@ class TokenStore(models.Model):
 
     def save(self, *args, **kwargs):
         self.token = self._generate_token()
-        super(self).save(*args, **kwargs)
+        super().save(*args, **kwargs)

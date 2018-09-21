@@ -33,7 +33,7 @@ def scan(request):
         scan = Scanning.objects.create()
 
     if scan.status == Scanning.RUN:
-        return
+        return redirect('scan_results')
 
     scan.status = 1
     scan.save()

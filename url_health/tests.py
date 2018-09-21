@@ -1,9 +1,12 @@
+import subprocess
+from unittest.mock import patch, Mock
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from .models import LinkStore, Scanning
-
+from .models import LinkStore, Scanning, TokenStore
+from .tasks import scan_links
 
 class ViewsTestCase(TestCase):
     def setUp(self):
@@ -25,9 +28,24 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(LinkStore.objects.count(), 1)
 
-    def test_scan(self):
-        #mock for a while cuz Celery
-        self.assertEqual(Scanning.objects.count(), 1)
+    @patch('url_health.views.scan_links.delay')
+    def test_scan(self, mocked_delay):
+        response = self.client.get(reverse('scan'))
+        self.assertEqual(response.status_code, 302)
+
+    @patch('url_health.views.scan_links.delay')
+    def test_scan_first_time(self, mocked_delay):
+        Scanning.objects.all().delete()
+        response = self.client.get(reverse('scan'))
+        self.assertEqual(response.status_code, 302)
+
+    @patch('url_health.views.scan_links.delay')
+    def test_scan_already_run(self, mocked_delay):
+        scan = Scanning.objects.first()
+        scan.status = Scanning.RUN
+        scan.save()
+        response = self.client.get(reverse('scan'))
+        self.assertEqual(response.status_code, 302)
 
     def test_poll_results(self):
         response = self.client.get(reverse('poll_results'))
@@ -73,3 +91,20 @@ class ViewsTestCase(TestCase):
         scan.save()
         response = self.client.get(reverse('poll_results'))
         self.assertEqual(response.status_code, 200)
+
+    def test_task(self):
+
+        with patch.object(subprocess, 'check_call', return_value=None) as mock_method:
+            scan_links('https://tester.com')
+
+    def test_task_fail(self):
+        from url_health.tasks import scan_links
+        import subprocess
+        def raise_(ex):
+            raise ex
+        with patch.object(subprocess, 'check_call', return_value=lambda: raise_(Exception('foobar'))) as mock_method:
+            mock_method.raiseError.side_effect = Mock(side_effect=Exception('Test'))
+            scan_links('https://tester.com')
+
+    def test_token(self):
+        TokenStore.objects.create()
