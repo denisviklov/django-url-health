@@ -83,7 +83,6 @@ def fetch_links(request):
 @csrf_exempt
 @json_view
 def post_link_info(request):
-    print(request.POST.get('link'))
     instance = get_object_or_404(LinkStore, link=request.POST.get('link'))
     form = URLForm(request.POST, instance=instance)
     if form.is_valid():

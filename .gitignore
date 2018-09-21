@@ -16,3 +16,4 @@ requirements.txt
 build/*
 dist/*
 django_url_health.egg-info/*
+htmlcov/*

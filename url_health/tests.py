@@ -46,3 +46,30 @@ class ViewsTestCase(TestCase):
     def test_fetch_links(self):
         response = self.client.get(reverse('fetch_links'))
         self.assertEqual(response.status_code, 200)
+
+    def test_post_link_info(self):
+        link = LinkStore.objects.create(link='https://test.com')
+        response = self.client.post(reverse('post_link_info'),
+            {'link':'https://test.com', 'status': 200})
+        self.assertEqual(response.status_code, 200)
+        link = LinkStore.objects.first()
+        self.assertEqual(link.status, 200)
+
+    def test_post_link_info_wrong_url(self):
+        LinkStore.objects.create(link='https://test.com')
+        response = self.client.post(reverse('post_link_info'),
+            {'link': 'test.com'})
+        self.assertEqual(response.status_code, 404)
+
+    def test_post_link_info_wrong_form(self):
+        LinkStore.objects.create(link='test.com')
+        response = self.client.post(reverse('post_link_info'),
+            {'link': 'test.com', 'status': '200'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_stop_scan(self):
+        scan = Scanning.objects.first()
+        scan.status = 1
+        scan.save()
+        response = self.client.get(reverse('poll_results'))
+        self.assertEqual(response.status_code, 200)
